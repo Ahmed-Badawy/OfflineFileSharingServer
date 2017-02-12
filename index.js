@@ -95,7 +95,6 @@ var scanDir = function(dir, done) {
 
 
 
-
 // download response:    http://localhost:3000/download/1.img
 // exApp.get('/download/*',function(request,result){
 // 	result.download('./upload/me.jpg','file_name'); //return a download file
@@ -104,8 +103,12 @@ var scanDir = function(dir, done) {
 
 
 
-var formidable = require('formidable');
+exApp.get('/delete', function(req, res){
+  let file_name = req.query.file_name;
+}
 
+
+var formidable = require('formidable');
 exApp.post('/upload', function(req, res){
   var form = new formidable.IncomingForm();
   form.multiples = true;

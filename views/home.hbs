@@ -27,13 +27,37 @@
   <form action="/upload" class="dropzone" drop-zone="" id="file-dropzone"></form>
 </div>
 
+
+
+
 <div class="col-sm-6">
-	<div class="button-group row">
-  {{#each files_list as |file|}}
-				<a  class="btn btn-default btn-xs col-sm-3" href="download/{{file.file_name}}" target='_blank' download='{{file.file_name}}'>{{file.file_name}}</a>
-		{{/each}}
-	</div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#Download" aria-controls="Download" role="tab" data-toggle="tab">Download</a></li>
+    <li role="presentation"><a href="#Delete" aria-controls="Delete" role="tab" data-toggle="tab">Delete</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="Download">
+      <div class="button-group row">
+        {{#each files_list as |file|}}
+            <a  class="btn btn-default btn-xs col-sm-3" href="download/{{file.file_name}}" target='_blank' download='{{file.file_name}}'>{{file.file_name}}</a>
+        {{/each}}
+      </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="Delete">
+      <div class="button-group row">
+        {{#each files_list as |file|}}
+            <a  class="btn btn-danger btn-xs col-sm-3" href="delete/{{file.file_name}}">{{file.file_name}}</a>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
 </div>
+
 
 
 <script type="text/javascript" src='dropzone.min.js'></script>
