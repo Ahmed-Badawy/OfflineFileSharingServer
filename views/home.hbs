@@ -43,14 +43,14 @@
     <div role="tabpanel" class="tab-pane active" id="Download">
       <div class="button-group row">
         {{#each files_list as |file|}}
-            <a  class="btn btn-default btn-xs col-sm-3" href="download/{{file.file_name}}" target='_blank' download='{{file.file_name}}'>{{file.file_name}}</a>
+            <a  class="btn btn-default btn-xs" href="download/{{file.file_name}}" target='_blank' download='{{file.file_name}}'>{{file.file_name}}</a>
         {{/each}}
       </div>
     </div>
     <div role="tabpanel" class="tab-pane" id="Delete">
       <div class="button-group row">
         {{#each files_list as |file|}}
-            <a  class="btn btn-danger btn-xs col-sm-3" href="delete/{{file.file_name}}">{{file.file_name}}</a>
+            <a  class="btn btn-danger btn-xs" href="delete/{{file.file_name}}">{{file.file_name}}</a>
         {{/each}}
       </div>
     </div>

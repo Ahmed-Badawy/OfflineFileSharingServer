@@ -1,18 +1,26 @@
 var express = require('express');
 var exApp = express();
 
+var fs = require('fs');
+var path = require('path');
+var _ = require('lodash');
+
+
+
+  // let uploads_folder_dir = path.join(__dirname,'uploads');
+  let uploads_folder_dir = path.join('./','uploads');
 
 
 
 var engines = require('consolidate');
 exApp.engine('hbs',engines.handlebars);//force handlebars as the default templating engine
 
-	exApp.set('views','./views'); // get views from ./views
-	// exApp.set('view engine','jade');
-	exApp.set('view engine','hbs'); //user hbs template engine
+  exApp.set('views','./views'); // get views from ./views
+  // exApp.set('view engine','jade');
+  exApp.set('view engine','hbs'); //user hbs template engine
 
 
-  exApp.use('/download',express.static('./upload'));//means: any request to /images return with the public/images/pics directory
+  exApp.use('/download',express.static(uploads_folder_dir));//means: any request to /images return with the public/images/pics directory
   exApp.use(express.static('public'));// this is a default request directory
 
 
@@ -27,11 +35,6 @@ exApp.use(function(req,res,next){
 	next();
 })
 /**********************************************************************/
-
-var fs = require('fs');
-var path = require('path');
-var _ = require('lodash');
-
 
 
 
@@ -63,7 +66,7 @@ var scanDir = function(dir, done) {
 
   let files_list = [];
   function populate_files_list(){
-    scanDir("./uploads",function(err,list){
+    scanDir(uploads_folder_dir,function(err,list){
       if(err) throw err;
       files_list = list;
     });
@@ -103,16 +106,20 @@ var scanDir = function(dir, done) {
 
 
 
-exApp.get('/delete', function(req, res){
-  let file_name = req.query.file_name;
-}
+exApp.get('/delete/:file_name', function(req, res){
+  let file_name = req.params.file_name;
+  // fs.rmdirSync( path.join(uploads_folder_dir,file_name) );
+  fs.unlinkSync(path.join(uploads_folder_dir,file_name));
+  populate_files_list();
+  res.redirect('/');
+});
 
 
 var formidable = require('formidable');
 exApp.post('/upload', function(req, res){
   var form = new formidable.IncomingForm();
   form.multiples = true;
-  form.uploadDir = path.join(__dirname, '/uploads');
+  form.uploadDir = uploads_folder_dir;
   form.on('file', function(field, file){
     fs.rename(file.path, path.join(form.uploadDir, file.name));
   });
